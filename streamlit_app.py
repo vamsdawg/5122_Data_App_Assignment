@@ -103,7 +103,7 @@ if selected_subcategories:
     
     with col3:
         st.metric(
-            label="Profit Margin",
+            label=" Overall Profit Margin",
             value=f"{profit_margin:.2f}%",
             delta=f"{profit_margin_delta:.2f}% vs overall avg"
         )
