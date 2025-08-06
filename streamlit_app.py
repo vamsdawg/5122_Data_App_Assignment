@@ -54,6 +54,19 @@ selected_subcategories = st.multiselect(
 
 st.write(f"You selected subcategories: {selected_subcategories}")
 
-st.write("### (3) show a line chart of sales for the selected items in (2)")
+# (3) Line chart of sales for selected subcategories
+st.write("### (3) Sales Over Time for Selected Sub-Categories")
+if selected_subcategories:
+    # Filter data for selected subcategories
+    filtered_df = df[df['Sub_Category'].isin(selected_subcategories)]
+    
+    # Group by month and subcategory to show sales over time
+    sales_by_month_subcategory = filtered_df.groupby([pd.Grouper(freq='M'), 'Sub_Category'])['Sales'].sum().unstack(fill_value=0)
+    
+    st.dataframe(sales_by_month_subcategory)
+    st.line_chart(sales_by_month_subcategory)
+else:
+    st.write("Please select at least one sub-category to display the chart.")
+
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
 st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
